@@ -1,27 +1,52 @@
 <?php
-$jeuJ1 = 0;
-$jeuJ2 = 0;
 
-for ($jeu = 0; $jeuJ1 < 4 & $jeuJ2 < 4 & $jeuJ1 - $jeuJ2  ; $jeu++) {
+// TODO : rajouter une boucle FOR pour simuler un match (plusieurs sets)
 
-    $scoreJ1 = rand(1, 10);
-    $scoreJ2 = rand(1, 10);
+$jeu_joueur1 = 0;
+$jeu_joueur2 = 0;
 
-    // Incrémentation des points pour gagner un jeu.
-    if ($scoreJ1 > $scoreJ2) {
-        $jeuJ1++;
-        echo "J1 = $jeuJ1\n";
-    } else {
-        $jeuJ2++;
-        echo "J2 = $jeuJ2\n";
+$set_joueur1 = 0;
+$set_joueur2 = 0;
+
+// Boucle FOR pour simuler des jeux jusqu'à ce qu'un joueur remporte un set ( 6 jeux )
+for ($set = 0; $set_joueur1 < 6 & $set_joueur2 < 6; $set++) {
+
+    // Remise à zero des valeurs quand un jeu est validé.
+    $jeu_joueur1 = 0;
+    $jeu_joueur2 = 0;
+
+    // Boucle FOR pour simuler des echanges jusqu'à ce qu'un joueur atteigne un score = 4 et valide un jeu.
+    for ($jeu = 0; $jeu_joueur1 < 4 & $jeu_joueur2 < 4; $jeu++) {
+
+        // Génération de scores aléatoires pour savoir quel joueur gagne l'échange. 
+        $score_joueur1 = rand(1, 10);
+        $score_joueur2 = rand(1, 10);
+
+        // Incrémentation des points pour gagner un jeu.
+        if ($score_joueur1 === $score_joueur2) {
+            continue;
+        } elseif ($score_joueur1 > $score_joueur2) {
+            $jeu_joueur1++;
+        } else {
+            $jeu_joueur2++;
+        }
+
+        // Une fois qu'un joueur atteint 4 il gagne un jeu.
+        if ($jeu_joueur1 === 4) {
+            $set_joueur1++;
+            echo "Score : [ $jeu_joueur1 - $jeu_joueur2 ]\n" . PHP_EOL;
+            echo "Jeu - Joueur 1 !\n" . PHP_EOL;
+        } elseif ($jeu_joueur2 === 4) {
+            $set_joueur2++;
+            echo "Score : [ $jeu_joueur1 - $jeu_joueur2 ]\n" . PHP_EOL;
+            echo "Jeu - Joueur 2 !\n" . PHP_EOL;
+        } else {
+            echo "Score : [ $jeu_joueur1 - $jeu_joueur2 ]\n";
+        }
     }
-
-    // Une fois qu'un joueur atteint 4 il gagne un jeu.
-    if ($jeuJ1 === 4) {
-        echo "J1 win ($jeuJ1)";
-    } elseif ($jeuJ2 === 4) {
-        echo "J2 win ($jeuJ2)";
-    } else {
-        echo "jeu en cours [ $jeuJ1 - $jeuJ2 ]\n";
+    if ($set_joueur1 === 6) {
+        echo "Joueur 1 remporte le set !\n";
+    } elseif ($set_joueur2 === 6) {
+        echo "Joueur 2 remporte le set !\n";
     }
 }
